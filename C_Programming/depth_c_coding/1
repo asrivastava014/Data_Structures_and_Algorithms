@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define CONVERSION_CONSTANT 1.8
+#define TRUE 1
+#define MAX 10
+
+void main()
+{
+	float temp_celsius = 0xFFFFFFFF;
+    char temp[MAX] = '\0';
+    
+	while(TRUE)
+    {
+		printf("Enter the value in degree celsius\n");
+        scanf("%s",&temp);
+        if (strlen(temp) >= MAX)
+ 		{
+			printf(Wierd/Long digit combination entered\n);
+            continue;
+		}
+        
+        while(temp[i] < strlen(temp))
+        {
+			if (temp[i] < 48 || temp[i] > 57)
+ 			{
+				if (temp[i] != 46)
+				{
+					printf("Input contains symbols or unwanted characters.\n");
+                    continue;
+				}
+			}
+        	i++;
+        }
+		temp_celsius = atof(str);
+        printf("entered value is = %f\n",temp_celsius);
+        
+        /* Calculate and display the Temperature in Fahrenheit */    
+        printf("Temperature in Fahrenhiet: %f\n", ((temp_celsius * CONVERSION_CONSTANT) + 32));
+	}
+return;
+}

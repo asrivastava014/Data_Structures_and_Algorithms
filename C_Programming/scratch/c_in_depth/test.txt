@@ -1,0 +1,9 @@
+    printf("%ld\n", sizeof(int));
+    printf("%ld\n", sizeof(signed int));
+    printf("%ld\n", sizeof(short int));
+    printf("%ld\n", sizeof(short signed int));
+    printf("%ld\n", sizeof(long int));
+    printf("%ld\n", sizeof(unsigned short int));
+    printf("%ld\n", sizeof(unsigned int));
+    printf("%ld\n", sizeof(unsigned long int));
+

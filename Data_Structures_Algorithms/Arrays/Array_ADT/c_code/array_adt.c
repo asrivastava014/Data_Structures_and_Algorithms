@@ -11,16 +11,29 @@
 #include "array_adt.h"
 
 
-void swap_array_item(int *A, int curr_idx, int new_idx)
+/*********************************************************************
+* Function: swap_array_item
+* About:    Swaps the array elements
+*           
+* 
+**********************************************************************/
+void swap_array_item(Array_ptr A, int curr_idx, int new_idx)
 {
-    int temp = A[new_idx];     
+    int temp = A->A[new_idx];     
 
-    A[new_idx]  = A[curr_idx];
-    A[curr_idx] = temp; 
+    A->A[new_idx]  = A->A[curr_idx];
+    A->A[curr_idx] = temp; 
     
     return;
 }
 
+
+/*********************************************************************
+* Function: swap_array_by_addr 
+* About:    swap array elements by there addresses.
+*           
+* 
+**********************************************************************/
 void swap_array_by_addr(int *A, int *B)
 {
     int temp = *B;     
@@ -31,6 +44,13 @@ void swap_array_by_addr(int *A, int *B)
     return;
 }
 
+
+/*********************************************************************
+* Function: init_array 
+* About:    initializes the array by memory allocation.
+*           
+* 
+**********************************************************************/
 void init_array(Array_ptr array, int size)
 {
     if(array->A != NULL)
@@ -53,6 +73,13 @@ void init_array(Array_ptr array, int size)
     return;
 }
 
+
+/*********************************************************************
+* Function: delete_array
+* About:    deletes the array elements by de-allocationg memory
+*           
+* 
+**********************************************************************/
 void delete_array(Array_ptr array)
 {
     free(array->A);
@@ -62,6 +89,13 @@ void delete_array(Array_ptr array)
     return;
 }
 
+
+/*********************************************************************
+* Function:  display
+* About:     displays the array elements.
+*           
+* 
+**********************************************************************/
 void display(Array array)
 {
     if (array.length == 0)
@@ -78,6 +112,13 @@ void display(Array array)
     return;
 }
 
+
+/*********************************************************************
+* Function: append
+* About:    inserts the element at the end of the array
+*           
+* 
+**********************************************************************/
 void append(Array_ptr array, int item)
 {
     if(array->length == array->size)
@@ -90,6 +131,13 @@ void append(Array_ptr array, int item)
     return;
 }
 
+
+/*********************************************************************
+* Function: insert
+* About:    inserts the elements at the desired position in the array
+*           
+* 
+**********************************************************************/
 void insert(Array_ptr array, int idx, int item)
 {
     if(array->length == array->size)
@@ -115,6 +163,12 @@ void insert(Array_ptr array, int idx, int item)
 }
 
 
+/*********************************************************************
+* Function: delete_item
+* About:    deleted an array element
+*           
+* 
+**********************************************************************/
 int delete_item(Array_ptr array, int idx)
 {
     int item = -1;
@@ -141,6 +195,13 @@ int delete_item(Array_ptr array, int idx)
     return item;
 }
 
+
+/*********************************************************************
+* Function: linear_search
+* About:    searching an element with linear search algo
+*           
+* 
+**********************************************************************/
 int linear_search(Array array, int key)
 {
     int res = ERR;
@@ -162,6 +223,13 @@ int linear_search(Array array, int key)
     return res;
 }
 
+
+/*********************************************************************
+* Function:  linear_search_transposition
+* About:     changing the position of the searched element by pos-1
+*           
+* 
+**********************************************************************/
 int linear_search_transposition(Array_ptr array, int key)
 {
     int res = ERR;
@@ -186,6 +254,12 @@ int linear_search_transposition(Array_ptr array, int key)
 }
 
 
+/*********************************************************************
+* Function: linear_search_move_to_head
+* About:    if element found, moves the element to the head.
+*           
+* 
+**********************************************************************/
 int linear_search_move_to_head(Array_ptr array, int key)
 {
     int res = ERR;
@@ -209,6 +283,13 @@ int linear_search_move_to_head(Array_ptr array, int key)
     return res;
 }
 
+
+/*********************************************************************
+* Function: Bin_search 
+* About:    Searching with sorted list.
+*           
+* 
+**********************************************************************/
 int Bin_Search(Array array, int low, int high, int key)
 {
     while(low <= high)
@@ -233,6 +314,12 @@ int Bin_Search(Array array, int low, int high, int key)
 }
 
 
+/*********************************************************************
+* Function: Bin_Search_rec
+* About:    Recursive Binary Searching
+*           
+* 
+**********************************************************************/
 int Bin_Search_rec(Array array, int low, int high, int key)
 {
     if(low <= high)
@@ -256,6 +343,12 @@ int Bin_Search_rec(Array array, int low, int high, int key)
 }
 
 
+/*********************************************************************
+* Function: binary_search
+* About:    Wrapper function
+*           
+* 
+**********************************************************************/
 int binary_search(Array array, int key)
 {
     int low = 0, high = array.length-1;
@@ -270,6 +363,12 @@ int binary_search(Array array, int key)
 }
 
 
+/*********************************************************************
+* Function: binary_search_rec
+* About:    Wrapper function
+*           
+* 
+**********************************************************************/
 int binary_search_rec(Array array, int key)
 {
     int low = 0, high = array.length-1;
@@ -442,15 +541,15 @@ int sum_rec(Array A)
 *           
 * 
 **********************************************************************/
-float Array::avg()
+float avg(Array A)
 {
-    if(length == 0)
+    if(A.length == 0)
     {
-        cout<<"Array Empty"<<endl;
+        printf("Array Empty.\n");
         return ERR;
     }
 
-    return (sum()/length);
+    return (sum(A)/A.length);
 }
 
 
@@ -460,29 +559,29 @@ float Array::avg()
 *           
 * 
 **********************************************************************/
-void Array::reverse()
+void reverse(Array_ptr A)
 {
     int i, j;
 
-    if(length == 0)
+    if(A->length == 0)
     {
-        cout<<"Empty Array."<<endl;
+        printf("Empty Array.\n");
         return;
     }
 
-    int *B = new int[length];
+    int *B = (int *)malloc(sizeof(int) * A->length);
 
-    for(i = 0, j = length-1; j >= 0; i++, j--)
+    for(i = 0, j = A->length-1; j >= 0; i++, j--)
     {
-        B[i] = A[j];
+        B[i] = A->A[j];
     }
 
-    for (i = 0; i < length; i++)
+    for (i = 0; i < A->length; i++)
     {
-        A[i] = B[i];
+        A->A[i] = B[i];
     }
 
-    delete[] B;
+    free(B);
 
     return;
 }
@@ -494,19 +593,19 @@ void Array::reverse()
 *           
 * 
 **********************************************************************/
-void Array::reverse_opt()
+void reverse_opt(Array_ptr A)
 {
-    int i, j, temp;
+    int i, j;
 
-    if(length == 0)
+    if(A->length == 0)
     {
-        cout<<"Empty Array."<<endl;
+        printf("Empty Array.\n");
         return;
     }
 
-    for(i = 0, j = length-1; i < j; i++, j--)
+    for(i = 0, j = A->length-1; i < j; i++, j--)
     {
-        swap_array_item(i, j);
+        swap_array_item(A, i, j);
     }
 
     return;
@@ -519,22 +618,22 @@ void Array::reverse_opt()
 *           
 * 
 **********************************************************************/
-void Array::left_shift()
+void left_shift(Array_ptr A)
 {
     int i;
 
-    if(length == 0)
+    if(A->length == 0)
     {
-        cout<<"Array Empty."<<endl;
+        printf("Array Empty.\n");
         return;
     }
 
-    for(i = 0; i < length-1; i++)
+    for(i = 0; i < A->length-1; i++)
     {
-        A[i] = A[i+1];
+        A->A[i] = A->A[i+1];
     }
 
-    A[i] = 0;
+    A->A[i] = 0;
 
     return;
 }
@@ -546,22 +645,22 @@ void Array::left_shift()
 *           
 * 
 **********************************************************************/
-void Array::right_shift()
+void right_shift(Array_ptr A)
 {
     int i;
 
-    if(length == 0)
+    if(A->length == 0)
     {
-        cout<<"Array Empty."<<endl;
+        printf("Array Empty.\n");
         return;
     }
 
-    for(i = length-1; i > 0; i--)
+    for(i = A->length-1; i > 0; i--)
     {
-        A[i] = A[i-1];
+        A->A[i] = A->A[i-1];
     }
 
-    A[i] = 0;
+    A->A[i] = 0;
 
     return;
 }
@@ -573,42 +672,41 @@ void Array::right_shift()
 *           
 * 
 **********************************************************************/
-void Array::left_rotate()
+void left_rotate(Array_ptr A)
 {
-    if(length == 0)
+    if(A->length == 0)
     {
-        cout<<"Array Empty."<<endl;
+        printf("Array Empty.\n");
         return;
     }
 
-    int item = A[0];
+    int item = A->A[0];
 
-    left_shift();
-    A[length-1] = item;
+    left_shift(A);
+    A->A[A->length-1] = item;
 
     return;
 }
 
 
-#if 0
 /*********************************************************************
 * Function: right_rotate
 * About:    rotating an array to the right
 *           
 * 
 **********************************************************************/
-void Array::right_rotate()
+void right_rotate(Array_ptr A)
 {
-    if(length == 0)
+    if(A->length == 0)
     {
-        cout<<"Array Empty."<<endl;
+        printf("Array Empty.\n");
         return;
     }
 
-    int item = A[length-1];
+    int item = A->A[A->length-1];
 
-    right_shift();
-    A[0] = item;
+    right_shift(A);
+    A->A[0] = item;
 
     return;
 }
@@ -620,30 +718,30 @@ void Array::right_rotate()
 *           
 * 
 **********************************************************************/
-void Array::insert_sorted(int item)
+void insert_sorted(Array_ptr A, int item)
 {
-    int i = length-1;
+    int i = A->length-1;
 
-    if(length == size)
+    if(A->length == A->size)
     {
-        cout<<"Array full."<<endl;
+        printf("Array full.\n");
         return;
     }
 
-    while(i >= 0 && A[i] >= item)
+    while(i >= 0 && A->A[i] >= item)
     {
-        if(item == A[i])
+        if(item == A->A[i])
         {
-            cout<<"Element already present at index: "<<i<<endl;
+            printf("Element already present at index: %d\n",i);
             return;
         }
 
-        A[i+1] = A[i];
+        A->A[i+1] = A->A[i];
         i--;
     }
 
-    A[i+1] = item;
-    length++;
+    A->A[i+1] = item;
+    A->length++;
 
     return;
 }
@@ -655,16 +753,17 @@ void Array::insert_sorted(int item)
 *           
 * 
 **********************************************************************/
-bool Array::is_sorted()
+bool is_sorted(Array A)
 {
-    if (length == 0)
+    if (A.length == 0)
     {
-        cout<<"Array Empty."<<endl;
+        printf("Array Empty.\n");
+        return false;
     }
 
-    for(int i = 0; i < length-1; i++)
+    for(int i = 0; i < A.length-1; i++)
     {
-        if(A[i] > A[i+1])
+        if(A.A[i] > A.A[i+1])
         {
             return false;
         }
@@ -680,27 +779,27 @@ bool Array::is_sorted()
 *           
 * 
 **********************************************************************/
-void Array::set_number_pos_neg()
+void set_number_pos_neg(Array_ptr A)
 {
-    if(length == 0)
+    if(A->length == 0)
     {
-        cout<<"Array is Empty."<<endl;
+        printf("Array is Empty.\n");
         return;
     }
 
     int i, j;
 
     i = 0;
-    j = length-1;
+    j = A->length-1;
 
     while(i < j)
     {
-        while(A[i] < 0)  {i++;}
-        while(A[j] >= 0) {j--;}
+        while(A->A[i] < 0)  {i++;}
+        while(A->A[j] >= 0) {j--;}
 
         if(i < j)
         {
-            swap_array_item(i, j);
+            swap_array_item(A, i, j);
         }
     }
 
@@ -714,22 +813,22 @@ void Array::set_number_pos_neg()
 *           
 * 
 **********************************************************************/
-void merge_sort(Array& A, Array& B)
+void merge_sort(Array A, Array B)
 {
     if(0 == A.length && 0 == B.length)
     {
-        cout<<"Arrays are Empty"<<endl;
+        printf("Arrays are Empty\n");
         return;
     }
 
     int i = 0, j = 0, k = 0;
     int total_size = A.length + B.length;
 
-    int *C = new int[total_size];
+    int *C = (int *)malloc(sizeof(int) * total_size);
 
     if(!C)
     {
-        cout<<"Not enough memory."<<endl;
+        printf("Not enough memory.\n");
         return;
     }
 
@@ -745,9 +844,9 @@ void merge_sort(Array& A, Array& B)
         }
         else
         {
-            cout<<"Duplicate Value detected."<<endl;
+            printf("Duplicate Value detected.\n");
             C[k++] = A.A[i++];
-            C[k++] = B.A[j++];
+            j++;
         }
     }
 
@@ -763,12 +862,12 @@ void merge_sort(Array& A, Array& B)
 
     for(int m = 0; m < total_size; m++)
     {
-        cout<<C[m]<<"\t";
+        printf("%d\t", C[m]);
     }
 
-    cout<<endl;
+    printf("\n");
 
-    delete[] C;
+    free(C);
 }
 
 
@@ -778,11 +877,11 @@ void merge_sort(Array& A, Array& B)
 *           
 * 
 **********************************************************************/
-void set_union_unsorted(Array& A, Array& B)
+void set_union_unsorted(Array A, Array B)
 {
     if(0 == A.length && 0 == B.length)
     {
-        cout<<"Arrays are Empty"<<endl;
+        printf("Arrays are Empty");
         return;
     }
 
@@ -790,11 +889,11 @@ void set_union_unsorted(Array& A, Array& B)
     int total_size = A.length + B.length;
     bool is_duplicate = false;
 
-    int *C = new int[total_size];
+    int *C = (int *)malloc(sizeof(int) * total_size);
 
     if(!C)
     {
-        cout<<"Memory not available."<<endl;
+        printf("Memory not available.\n");
         return;
     }
 
@@ -825,11 +924,11 @@ void set_union_unsorted(Array& A, Array& B)
 
     for(i = 0; i < total_size; i++)
     {
-        cout<<C[i]<<"\t";
+        printf("%d\t", C[i]);
     }
-    cout<<endl;
+    printf("\n");
 
-    delete[] C;
+    free(C);
 
     return;
 }
@@ -841,21 +940,21 @@ void set_union_unsorted(Array& A, Array& B)
 *           
 * 
 **********************************************************************/
-void set_union_sorted(Array& A, Array& B)
+void set_union_sorted(Array A, Array B)
 {
     if(0 == A.length && 0 == B.length)
     {
-        cout<<"Arrays are Empty"<<endl;
+        printf("Arrays are Empty\n");
         return;
     }
 
     int total_size = A.length + B.length;
 
-    int *C = new int[total_size];
+    int *C = (int *)malloc(sizeof(int) * total_size);
 
     if(!C)
     {
-        cout<<"Memory not available."<<endl;
+        printf("Memory not available.\n");
         return;
     }
 
@@ -891,11 +990,11 @@ void set_union_sorted(Array& A, Array& B)
     
     for(i = 0; i < total_size; i++)
     {
-        cout<<C[i]<<"\t";
+        printf("%d\t", C[i]);
     }
-    cout<<endl;
+    printf("\n");
 
-    delete[] C;
+    free(C);
 
     return;
 }
@@ -907,11 +1006,11 @@ void set_union_sorted(Array& A, Array& B)
 *           
 * 
 **********************************************************************/
-void set_intersec_unsorted(Array& A, Array& B)
+void set_intersec_unsorted(Array A, Array B)
 {
     if(0 == A.length || 0 == B.length)
     {
-        cout<<"Array(s) are Empty"<<endl;
+        printf("Array(s) are Empty.\n");
         return;
     }
 
@@ -928,11 +1027,11 @@ void set_intersec_unsorted(Array& A, Array& B)
     }
     
 
-    int *C = new int[total_size];
+    int *C = (int *)malloc(sizeof(int) * total_size);
 
     if(!C)
     {
-        cout<<"Memory not available."<<endl;
+        printf("Memory not available.\n");
         return;
     }
 
@@ -957,11 +1056,11 @@ void set_intersec_unsorted(Array& A, Array& B)
 
     for(i = 0; i < total_size; i++)
     {
-        cout<<C[i]<<"\t";
+        printf("%d\t", C[i]);
     }
-    cout<<endl;
+    printf("\n");
 
-    delete[] C;
+    free (C);
 
     return;
 }
@@ -973,11 +1072,11 @@ void set_intersec_unsorted(Array& A, Array& B)
 *           
 * 
 **********************************************************************/
-void set_intersec_sorted(Array& A, Array& B)
+void set_intersec_sorted(Array A, Array B)
 {
     if(0 == A.length || 0 == B.length)
     {
-        cout<<"Array(s) are Empty"<<endl;
+        printf("Array(s) are Empty.\n");
         return;
     }
 
@@ -992,11 +1091,11 @@ void set_intersec_sorted(Array& A, Array& B)
         total_size = B.length;
     }
 
-    int *C = new int[total_size];
+    int *C = (int *)malloc(sizeof(int) * total_size);
 
     if(!C)
     {
-        cout<<"Memory not available."<<endl;
+        printf("Memory not available.\n");
         return;
     }
 
@@ -1022,11 +1121,11 @@ void set_intersec_sorted(Array& A, Array& B)
 
     for(i = 0; i < total_size; i++)
     {
-        cout<<C[i]<<"\t";
+        printf("%d\t", C[i]);
     }
-    cout<<endl;
+    printf("\n");
 
-    delete[] C;
+    free (C);
 
     return;
 }
@@ -1038,22 +1137,22 @@ void set_intersec_sorted(Array& A, Array& B)
 *           
 * 
 **********************************************************************/
-void set_diff_unsorted(Array& A, Array& B)
+void set_diff_unsorted(Array A, Array B)
 {
     if(0 == A.length || 0 == B.length)
     {
-        cout<<"Array(s) are Empty"<<endl;
+        printf("Array(s) are Empty.\n");
         return;
     }
 
     int total_size = A.length;  //since max size will be A
     bool is_duplicate = false;
 
-    int *C = new int[total_size];
+    int *C = (int *)malloc(sizeof(int) * total_size);
 
     if(!C)
     {
-        cout<<"Memory not available."<<endl;
+        printf("Memory not available.\n");
         return;
     }
 
@@ -1078,11 +1177,11 @@ void set_diff_unsorted(Array& A, Array& B)
 
     for(i = 0; i < total_size; i++)
     {
-        cout<<C[i]<<"\t";
+        printf("%d\t", C[i]);
     }
-    cout<<endl;
+    printf("\n");
 
-    delete[] C;
+    free (C);
 
     return;
 }
@@ -1093,21 +1192,21 @@ void set_diff_unsorted(Array& A, Array& B)
 * About:    A - B ==> Set difference for sorted arrays
 * 
 **********************************************************************/
-void set_diff_sorted(Array& A, Array& B)
+void set_diff_sorted(Array A, Array B)
 {
     if(0 == A.length || 0 == B.length)
     {
-        cout<<"Array(s) are Empty"<<endl;
+        printf("Array(s) are Empty.\n");
         return;
     }
 
     int total_size = A.length; //Since max size will be of A
 
-    int *C = new int[total_size];
+    int *C = (int *)malloc(sizeof(int) * total_size);
 
     if(!C)
     {
-        cout<<"Memory not available."<<endl;
+        printf("Memory not available.\n");
         return;
     }
 
@@ -1137,49 +1236,11 @@ void set_diff_sorted(Array& A, Array& B)
 
     for(i = 0; i < total_size; i++)
     {
-        cout<<C[i]<<"\t";
+        printf("%d\t", C[i]);
     }
-    cout<<endl;
+    printf("\n");
 
-    delete[] C;
+    free (C);
 
     return;
 }
-
-int  Array::get_item_at_index(int idx)
-{
-    return 0;
-}
-
-void Array::set_index(int idx)
-{
-
-}
-
-int Array::Max()
-{
-
-}
-
-int Array::Min()
-{
-    return 0;
-}
-
-void Array::reverse()
-{
-
-}
-
-void Array::shift()
-{
-
-}
-
-void Array::rotate()
-{
-
-}
-
-#endif
-

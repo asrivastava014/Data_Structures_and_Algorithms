@@ -787,6 +787,7 @@ bool Array::is_sorted()
     if (length == 0)
     {
         cout<<"Array Empty."<<endl;
+	return false;
     }
 
     for(int i = 0; i < length-1; i++)
@@ -874,7 +875,7 @@ void merge_sort(Array& A, Array& B)
         {
             cout<<"Duplicate Value detected."<<endl;
             C[k++] = A.A[i++];
-            C[k++] = B.A[j++];
+	    j++;
         }
     }
 
